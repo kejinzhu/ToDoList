@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        .del {
+            text-decoration: line-through;
+            color: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">
+                        ToDoList
+                    </a>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="row">
+                <!-- 控制宽高: -->
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="panel">
+                        <div class="panel-heading bg-warning">
+                            <h2 class="text-danger">亲~^_^,你有<span>{{TODO}}</span>件事要完成</h2>
+                            <input class="form-control" type="text" name="" id="" @keyup.enter="add" v-model="title">
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-group">
+                                <li class="list-group-item" v-for="(todo,index) in filterTodo">
+                                    <input type="checkbox" v-model="todo.isSelected">
+                                    <span :class="{del:todo.isSelected}">{{todo.title}}</span>
+                                    <button class="btn btn-danger pull-right btn-xs" @click="remove(index)">&bigotimes;</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="panel-footer">
+                            <ul class="nav nav-pills">
+                                <li role="presentation" :class="{active:item.isSelected}"  v-for="(item,index) in types" @click="changeType(index)"><a :href="item.hash" >{{item.type}}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="todoList.js"></script>
+</body>
+
+</html>
