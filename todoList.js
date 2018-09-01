@@ -3,11 +3,11 @@ let vm = new Vue({
     el: '#app',
     data: {
         todos: [
-            { isSelected: false, title: '睡觉' },
-            { isSelected: false, title: '吃饭' }
+            { inpShow: true, txtShow: true, isSelected: false, title: '睡觉', modifyShow: false, btnShow: true },
+            { inpShow: true, txtShow: true, isSelected: false, title: '吃饭', modifyShow: false, btnShow: true }
         ],
         title: "",
-        types: [{ type: "全部",hash:"#all", isSelected: false }, { type: "已完成",hash:"#finish", isSelected: false }, { type: "未完成",hash:"#unfinish", isSelected: false }],
+        types: [{ type: "全部", hash: "#all", isSelected: false }, { type: "已完成", hash: "#finish", isSelected: false }, { type: "未完成", hash: "#unfinish", isSelected: false }],
         hash: ""
     },
     //window可以监听当前哈希值的变化:hashchange;
@@ -26,21 +26,47 @@ let vm = new Vue({
         add() {
             //每回车一次，向todo中新增一个对象，当新增完成之后，清空当前input中的value
             this.todos.push({
-                isSelected: false, title: this.title
+                inpShow: true, txtShow: true, isSelected: false, title: this.title, modifyShow: false, btnShow: true
             });
             this.title = "";
         },
         remove(index) {
             this.todos = this.todos.filter(item => item !== this.todos[index]);
         },
-        changeType(Index){
+        changeType(Index) {
             this.types.forEach(item => {
-                if (item==this.types[Index]) {
+                if (item == this.types[Index]) {
                     item.isSelected = true;
                 } else {
                     item.isSelected = false;
-                }   
+                }
             });
+        },
+        showMod(e, index1) {
+            this.todos.forEach(item => {
+                if (item == this.todos[index1]) {
+                    item.inpShow = false;
+                    item.btnShow = false;
+                    item.txtShow = false;
+                    item.modifyShow = true;
+                }
+            })
+
+        },
+        modify(index2) {
+            this.todos.forEach(item => {
+                if (item == this.todos[index2]) {
+                    if (item.title == "") {
+                        this.todos = this.todos.filter(item => item !== this.todos[index2]);
+                    } else {
+                        item.isSelected = false;
+                        item.inpShow = true;
+                        item.btnShow = true;
+                        item.txtShow = true;
+                        item.modifyShow = false;
+                    }
+                }
+            })
         }
     },
     computed: {
@@ -54,10 +80,10 @@ let vm = new Vue({
                 return this.todos.filter(item => !item.isSelected);
             }
         },
-        TODO(){
-            let count=0;
-            this.todos.forEach(item=>{
-                if(!item.isSelected){
+        TODO() {
+            let count = 0;
+            this.todos.forEach(item => {
+                if (!item.isSelected) {
                     count++;
                 }
             })

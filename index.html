@@ -12,6 +12,10 @@
             text-decoration: line-through;
             color: #ccc;
         }
+        .inp{
+            border:1px solid #eee;
+            background: none;
+        }
     </style>
 </head>
 
@@ -21,7 +25,7 @@
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#">
-                        转青的列表清单
+                        ToDoList
                     </a>
                 </div>
             </div>
@@ -38,9 +42,9 @@
                         <div class="panel-body">
                             <ul class="list-group">
                                 <li class="list-group-item" v-for="(todo,index) in filterTodo">
-                                    <input type="checkbox" v-model="todo.isSelected">
-                                    <span :class="{del:todo.isSelected}">{{todo.title}}</span>
-                                    <button class="btn btn-danger pull-right btn-xs" @click="remove(index)">&bigotimes;</button>
+                                    <input type="checkbox" v-model="todo.isSelected" v-show="todo.inpShow">
+                                    <span :class="{del:todo.isSelected}" @dblclick="showMod($event,index)" v-show="todo.txtShow">{{todo.title}}</span><input type="text" class="inp" v-model="todo.title" v-show="todo.modifyShow" @keyup.enter="modify(index)">
+                                    <button v-show="todo.btnShow" class="btn btn-danger pull-right btn-xs" @click="remove(index)">&bigotimes;</button>
                                 </li>
                             </ul>
                         </div>
