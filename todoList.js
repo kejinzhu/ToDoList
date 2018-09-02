@@ -3,8 +3,8 @@ let vm = new Vue({
     el: '#app',
     data: {
         todos: [
-            { inpShow: true, txtShow: true, isSelected: false, title: '睡觉', modifyShow: false, btnShow: true },
-            { inpShow: true, txtShow: true, isSelected: false, title: '吃饭', modifyShow: false, btnShow: true }
+            {isSelected: false, title: '睡觉', modifyShow: false},
+            {isSelected: false, title: '吃饭', modifyShow: false}
         ],
         title: "",
         types: [{ type: "全部", hash: "#all", isSelected: false }, { type: "已完成", hash: "#finish", isSelected: false }, { type: "未完成", hash: "#unfinish", isSelected: false }],
@@ -26,7 +26,7 @@ let vm = new Vue({
         add() {
             //每回车一次，向todo中新增一个对象，当新增完成之后，清空当前input中的value
             this.todos.push({
-                inpShow: true, txtShow: true, isSelected: false, title: this.title, modifyShow: false, btnShow: true
+                isSelected: false, title: this.title, modifyShow: false
             });
             this.title = "";
         },
@@ -45,9 +45,6 @@ let vm = new Vue({
         showMod(e, index1) {
             this.todos.forEach(item => {
                 if (item == this.todos[index1]) {
-                    item.inpShow = false;
-                    item.btnShow = false;
-                    item.txtShow = false;
                     item.modifyShow = true;
                 }
             })
@@ -60,9 +57,6 @@ let vm = new Vue({
                         this.todos = this.todos.filter(item => item !== this.todos[index2]);
                     } else {
                         item.isSelected = false;
-                        item.inpShow = true;
-                        item.btnShow = true;
-                        item.txtShow = true;
                         item.modifyShow = false;
                     }
                 }
